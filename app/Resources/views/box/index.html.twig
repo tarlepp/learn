@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Boxes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Height</th>
+                <th>Width</th>
+                <th>Lenght</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for box in boxes %}
+            <tr>
+                <td><a href="{{ path('box_show', { 'id': box.id }) }}">{{ box.id }}</a></td>
+                <td>{{ box.height }}</td>
+                <td>{{ box.width }}</td>
+                <td>{{ box.lenght }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('box_show', { 'id': box.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('box_edit', { 'id': box.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('box_new') }}">Create a new box</a>
+        </li>
+    </ul>
+{% endblock %}

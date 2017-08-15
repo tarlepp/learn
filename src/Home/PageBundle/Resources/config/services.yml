@@ -1,0 +1,14 @@
+services:
+  box_form:
+    class: Symfony\Component\Form\Form
+    factory: ['@form.factory', create]
+    arguments:
+        -  Home\PageBundle\Form\BoxType
+
+  box_handler:
+    class: Home\PageBundle\Handler\BoxHandler
+    arguments: 
+      - "@box_form"
+      - "@request_stack"
+      - "@doctrine.orm.entity_manager"
+
