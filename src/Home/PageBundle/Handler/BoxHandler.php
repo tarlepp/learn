@@ -2,42 +2,60 @@
 
 namespace Home\PageBundle\Handler;
 
+use Home\PageBundle\Repository\BoxRepository;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-
 class BoxHandler
 {
-      protected $form;
-      protected $request;
+    /**
+     * @var Form
+     */
+    protected $form;
 
-      public function __construct(Form $form, RequestStack $requestStack)
-      {
-          $this->form = $form;
-          $this->request = $requestStack;
-      }
- 
-      public function process()
-      {
-             $this->form->handleRequest($this->request);
-          
-              if ($this->form->isSubmitted() && $this->form->isValid())
-          {
-               return true;
-          }
-          
-          return false;
-      }
-      
-            public function onsucess()
-      {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($box);
-            $em->flush();
-      }
-      
-      public function getForm()
-      {
-          return $this->form;
-      }
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * @var BoxRepository
+     */
+    protected $repository;
+
+    /**
+     * BoxHandler constructor.
+     *
+     * @param Form          $form
+     * @param RequestStack  $requestStack
+     * @param BoxRepository $repository
+     */
+    public function __construct(Form $form, RequestStack $requestStack, BoxRepository $repository)
+    {
+        $this->form = $form;
+        $this->requestStack = $requestStack;
+        $this->repository = $repository;
+    }
+
+    /**
+     * @return bool
+     */
+    public function process()
+    {
+        $this->form->handleRequest($this->requestStack->getCurrentRequest());
+
+        // Imho "process" will do whole the process not just handle request and see if form is submitted and valid...
+        return $this->form->isSubmitted() && $this->form->isValid();
+    }
+
+    public function onSuccess()
+    {
+        // Where does this '$box' came from? ?
+        $this->repository->save($box);
+    }
+
+    public function getForm()
+    {
+        return $this->form;
+    }
 }

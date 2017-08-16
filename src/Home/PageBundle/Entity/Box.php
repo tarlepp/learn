@@ -36,6 +36,8 @@ class Box
     private $width;
 
     /**
+     * lenght => length typo...
+     *
      * @var string
      *
      * @ORM\Column(name="lenght", type="string", length=255)

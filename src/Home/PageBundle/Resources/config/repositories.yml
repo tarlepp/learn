@@ -1,0 +1,12 @@
+# This file contains your repositories as services, so you can inject any of you repositories to other services...
+# example see BoxHandler service
+services:
+    repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: [ '@doctrine.orm.entity_manager', getRepository ]
+        shared: false
+
+    Home\PageBundle\Repository\BoxRepository:
+        parent: repository
+        arguments: [ Home\PageBundle\Entity\Box ]
+        public: false
