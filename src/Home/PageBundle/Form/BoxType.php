@@ -27,7 +27,7 @@ class BoxType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        // don't map entities to forms - see
+        // don't map entities to forms - see https://stovepipe.systems/post/avoiding-entities-in-forms
 
         $resolver->setDefaults(array(
             'data_class' => 'Home\PageBundle\Entity\Box'
